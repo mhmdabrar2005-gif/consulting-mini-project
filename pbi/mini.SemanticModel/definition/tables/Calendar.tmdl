@@ -1,0 +1,98 @@
+table Calendar
+	lineageTag: e6b2f5ea-0200-4905-bdc8-4c19ec006bf6
+
+	column Date
+		formatString: dd-mm-yyyy
+		lineageTag: 8955b12b-5ca8-4cc2-8fe9-3a5bfba5c940
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 65dbe10a-73fa-4bff-89d6-01e745b6830e
+			defaultHierarchy: LocalDateTable_184d1287-b734-4079-9641-fe73baf2da52.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column DateKey
+		lineageTag: 4ba3c3db-db0c-4347-a66c-27fd148714aa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DateKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 2160424a-eccd-471a-8f2f-d8c9ec29d83b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 647bff3b-6349-43c6-9876-8ceb30580727
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		formatString: 0
+		lineageTag: bd22a61c-9717-46e2-8881-0dffa2c05ef4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MonthNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: c9a3dbd6-a16a-4ef5-aff3-d858f37998dd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNumber
+		formatString: 0
+		lineageTag: 69352371-e8ab-4b79-b055-4d66f8fa1c58
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [WeekNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		lineageTag: 7cedec84-f43f-433b-8582-f523ae3679be
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfWeek]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source =
+				
+				VAR MinDate = MIN('Employee'[DateOfJoining]) -- Or MIN('Sales'[OrderDate])
+				VAR MaxDate = TODAY()                  -- This makes the end date dynamic
+				RETURN
+				ADDCOLUMNS (
+				    CALENDAR(MinDate, MaxDate),
+				    "DateKey", FORMAT([Date], "YYYYMMDD"),
+				    "Year", YEAR([Date]),
+				    "Month", FORMAT([Date], "MMMM"),
+				    "MonthNumber", MONTH([Date]),
+				    "Quarter", "Q" & FORMAT([Date], "Q"),
+				    "WeekNumber", WEEKNUM([Date]),
+				    "DayOfWeek", FORMAT([Date], "dddd")
+				)
+
+	annotation PBI_Id = 81c5c8e40e614112ac95b093ec7ea86a
+

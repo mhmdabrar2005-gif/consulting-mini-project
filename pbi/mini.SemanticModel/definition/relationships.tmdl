@@ -1,22 +1,30 @@
-relationship 3d96c8d9-aa54-4941-ace9-864d3dc81df3
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Attendance.Date
-	toColumn: LocalDateTable_d6d9b12a-4a4f-48de-a59a-544bc3298c00.Date
-
-relationship 4dc55d05-df9d-4b88-90a2-c3a4df841dc2
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Employee.DateOfJoining
-	toColumn: LocalDateTable_984d350a-9c24-4562-bdaa-7ee7fce90741.Date
-
-relationship AutoDetected_6f7e9409-389d-4394-a476-9af0d815c7de
-	fromColumn: Attendance.EmployeeID
-	toColumn: Employee.EmployeeID
-
 relationship AutoDetected_4434c915-bd25-41e8-83b1-773d5e9b5ef4
+	crossFilteringBehavior: bothDirections
 	fromColumn: Employee.DesignationID
 	toColumn: Designation.DesignationID
 
 relationship AutoDetected_35c13ad2-8ce2-4cd4-a4ea-62c01316d2df
+	crossFilteringBehavior: bothDirections
 	fromColumn: Employee.DepartmentID
 	toColumn: Department.DepartmentID
+
+relationship AutoDetected_09a7b7e4-c385-4c4d-a9d7-ad402a1e3288
+	crossFilteringBehavior: bothDirections
+	fromColumn: Attendance.EmployeeID
+	toColumn: Employee.EmployeeID
+
+relationship 65dbe10a-73fa-4bff-89d6-01e745b6830e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Date
+	toColumn: LocalDateTable_184d1287-b734-4079-9641-fe73baf2da52.Date
+
+relationship 6f71dff4-111e-3538-6cd2-f5dc8f6cefa6
+	crossFilteringBehavior: bothDirections
+	fromColumn: Employee.DateOfJoining
+	toColumn: Calendar.Date
+
+relationship 8dbc5e37-ec8e-4456-b545-950a739a5d88
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Attendance.Date
+	toColumn: LocalDateTable_9cc64efc-3d67-47a6-929e-71b31bc93655.Date
 

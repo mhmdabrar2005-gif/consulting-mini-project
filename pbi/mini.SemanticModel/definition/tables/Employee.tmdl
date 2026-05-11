@@ -26,20 +26,6 @@ table Employee
 
 		annotation SummarizationSetBy = Automatic
 
-	column DateOfJoining
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: e4b545c1-dd41-4c99-8e85-cceb0b3e041c
-		summarizeBy: none
-		sourceColumn: DateOfJoining
-
-		variation Variation
-			isDefault
-			relationship: 4dc55d05-df9d-4b88-90a2-c3a4df841dc2
-			defaultHierarchy: LocalDateTable_984d350a-9c24-4562-bdaa-7ee7fce90741.'Date Hierarchy'
-
-		annotation SummarizationSetBy = Automatic
-
 	column ExperienceYears
 		dataType: double
 		lineageTag: ed04aec8-0faa-41f8-a5fa-5c2eec6aa47b
@@ -84,6 +70,17 @@ table Employee
 
 		annotation SummarizationSetBy = Automatic
 
+	column DateOfJoining
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cd2c8cb4-a526-4823-8176-96e9851fb19f
+		summarizeBy: none
+		sourceColumn: DateOfJoining
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	partition Employee = m
 		mode: import
 		source =
@@ -91,9 +88,11 @@ table Employee
 				    Source = Excel.Workbook(File.Contents("C:\Users\MohammedAbrar\Desktop\consmini\Employee_Attendance_Overall_Dataset.xlsx"), null, true),
 				    Employee_Sheet = Source{[Item="Employee",Kind="Sheet"]}[Data],
 				    #"Promoted Headers" = Table.PromoteHeaders(Employee_Sheet, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EmployeeID", Int64.Type}, {"EmployeeName", type text}, {"Gender", type text}, {"DateOfJoining", type datetime}, {"ExperienceYears", type number}, {"DesignationID", Int64.Type}, {"DepartmentID", Int64.Type}, {"EmploymentType", type text}, {"EmployeeStatus", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EmployeeID", Int64.Type}, {"EmployeeName", type text}, {"Gender", type text}, {"DateOfJoining", type date}, {"ExperienceYears", type number}, {"DesignationID", Int64.Type}, {"DepartmentID", Int64.Type}, {"EmploymentType", type text}, {"EmployeeStatus", type text}})
 				in
 				    #"Changed Type"
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
 
