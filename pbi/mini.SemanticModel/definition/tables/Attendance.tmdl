@@ -1,0 +1,202 @@
+table Attendance
+	lineageTag: da11ea77-235c-43a9-9dd7-050a55bb7c62
+
+	column AttendanceID
+		dataType: int64
+		formatString: 0
+		lineageTag: 398a6a39-5c05-44d9-8d12-b6820b418410
+		summarizeBy: count
+		sourceColumn: AttendanceID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: int64
+		formatString: 0
+		lineageTag: d5a04210-be56-45bb-86c6-b27390dbd451
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a326487d-1e83-40c7-bc6f-02561e5d3a26
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 3d96c8d9-aa54-4941-ace9-864d3dc81df3
+			defaultHierarchy: LocalDateTable_d6d9b12a-4a4f-48de-a59a-544bc3298c00.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CheckInTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 5efead0e-bce9-4e9e-90f1-4b5f39289e61
+		summarizeBy: none
+		sourceColumn: CheckInTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column CheckOutTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: dffd4f96-75a9-4d85-a527-3b46896ea279
+		summarizeBy: none
+		sourceColumn: CheckOutTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column ScheduledStartTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 9d2fb45e-a893-42a7-b3bb-e5f3ede1b071
+		summarizeBy: none
+		sourceColumn: ScheduledStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column ScheduledEndTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 37fb8af0-48fe-4dcb-9e2f-73c5fd14eee5
+		summarizeBy: none
+		sourceColumn: ScheduledEndTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column TotalHoursWorked
+		dataType: double
+		lineageTag: d34e9d24-0c4a-4338-baa6-843a37b7e5b5
+		summarizeBy: sum
+		sourceColumn: TotalHoursWorked
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OvertimeHours
+		dataType: double
+		lineageTag: d2a0921a-dba7-4383-a025-a9593abc2e0a
+		summarizeBy: sum
+		sourceColumn: OvertimeHours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AttendanceStatus
+		dataType: string
+		lineageTag: 7b653a21-fc89-446a-ab5b-5dac71705c75
+		summarizeBy: none
+		sourceColumn: AttendanceStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column LateArrivalFlag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: bbddc469-4ff2-4c13-a40b-f383529154be
+		summarizeBy: none
+		sourceColumn: LateArrivalFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column EarlyLogoutFlag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b2214db8-4eb3-4fe0-9090-7cdc1c6d5029
+		summarizeBy: none
+		sourceColumn: EarlyLogoutFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeaveType
+		dataType: string
+		lineageTag: 5e40c350-1018-4657-b182-dbe31b71a2e0
+		summarizeBy: none
+		sourceColumn: LeaveType
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkMode
+		dataType: string
+		lineageTag: ab610f8f-4e77-478e-ab7a-9bb668b22c34
+		summarizeBy: none
+		sourceColumn: WorkMode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductivityScore
+		dataType: string
+		lineageTag: 6f15e524-f1b1-4c2c-a1d7-14a6ad5e0950
+		summarizeBy: none
+		sourceColumn: ProductivityScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column TaskCountCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 2039e059-09a7-4922-a255-691de513a123
+		summarizeBy: sum
+		sourceColumn: TaskCountCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetTaskCount
+		dataType: int64
+		formatString: 0
+		lineageTag: bb01f1f5-5a7d-470e-a334-9de6982df421
+		summarizeBy: sum
+		sourceColumn: TargetTaskCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column BillableHours
+		dataType: double
+		lineageTag: 079dc4a1-690d-4a45-bb6b-2e49f8c82fc4
+		summarizeBy: sum
+		sourceColumn: BillableHours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NonBillableHours
+		dataType: double
+		lineageTag: 699399fe-9239-419f-b49b-c8afe37dac2f
+		summarizeBy: sum
+		sourceColumn: NonBillableHours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Attendance = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\MohammedAbrar\Desktop\consmini\attendance.xlsx"), null, true),
+				    Attendance_Sheet = Source{[Item="Attendance",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Attendance_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"AttendanceID", Int64.Type}, {"EmployeeID", Int64.Type}, {"Date", type date}, {"CheckInTime", type time}, {"CheckOutTime", type time}, {"ScheduledStartTime", type time}, {"ScheduledEndTime", type time}, {"TotalHoursWorked", type number}, {"OvertimeHours", type number}, {"AttendanceStatus", type text}, {"LateArrivalFlag", type logical}, {"EarlyLogoutFlag", type logical}, {"LeaveType", type text}, {"WorkMode", type text}, {"ProductivityScore", type any}, {"TaskCountCompleted", Int64.Type}, {"TargetTaskCount", Int64.Type}, {"BillableHours", type number}, {"NonBillableHours", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,24 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Attendance","Designation","Department","Employee"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Attendance
+ref table DateTableTemplate_afff253f-9792-4eb8-bee5-b870c1c9c71e
+ref table LocalDateTable_d6d9b12a-4a4f-48de-a59a-544bc3298c00
+ref table Designation
+ref table Department
+ref table Employee
+ref table LocalDateTable_984d350a-9c24-4562-bdaa-7ee7fce90741
+
+ref cultureInfo en-US
+

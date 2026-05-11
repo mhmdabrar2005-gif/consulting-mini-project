@@ -1,0 +1,41 @@
+table Designation
+	lineageTag: 8bc229fe-2eed-461c-b4ee-1053ce7ea1fb
+
+	column DesignationID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c39a926-68d9-4b5e-a0a5-ef7949d828db
+		summarizeBy: none
+		sourceColumn: DesignationID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignationName
+		dataType: string
+		lineageTag: a787cd06-f356-4c7d-a7e9-b42a9abec61d
+		summarizeBy: none
+		sourceColumn: DesignationName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grade
+		dataType: string
+		lineageTag: 20a09a52-a332-4058-862e-eaaf7385b5be
+		summarizeBy: none
+		sourceColumn: Grade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Designation = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\MohammedAbrar\Desktop\consmini\Employee_Attendance_Overall_Dataset.xlsx"), null, true),
+				    Designation_Sheet = Source{[Item="Designation",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Designation_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"DesignationID", Int64.Type}, {"DesignationName", type text}, {"Grade", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,99 @@
+table Employee
+	lineageTag: d59b456f-8cba-41c3-ac4e-27879b727534
+
+	column EmployeeID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a39dfb2-27c0-48c2-b473-4fc2cb1e21b3
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeName
+		dataType: string
+		lineageTag: cde27464-60c8-4a3c-8efe-3313e36af254
+		summarizeBy: none
+		sourceColumn: EmployeeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: b2cd12ce-92b0-4d76-b96f-50adf8770bb4
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateOfJoining
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e4b545c1-dd41-4c99-8e85-cceb0b3e041c
+		summarizeBy: none
+		sourceColumn: DateOfJoining
+
+		variation Variation
+			isDefault
+			relationship: 4dc55d05-df9d-4b88-90a2-c3a4df841dc2
+			defaultHierarchy: LocalDateTable_984d350a-9c24-4562-bdaa-7ee7fce90741.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExperienceYears
+		dataType: double
+		lineageTag: ed04aec8-0faa-41f8-a5fa-5c2eec6aa47b
+		summarizeBy: sum
+		sourceColumn: ExperienceYears
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DesignationID
+		dataType: int64
+		formatString: 0
+		lineageTag: da8d858c-1414-43d1-b98e-d56332ea1ba4
+		summarizeBy: none
+		sourceColumn: DesignationID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: a4d742df-e317-4d74-955a-dd9e8e87206d
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmploymentType
+		dataType: string
+		lineageTag: 50fb1996-ef5e-49d7-97cb-d0fcbc161869
+		summarizeBy: none
+		sourceColumn: EmploymentType
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeStatus
+		dataType: string
+		lineageTag: a93237ce-a180-48ad-8720-2844dccaed01
+		summarizeBy: none
+		sourceColumn: EmployeeStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Employee = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\MohammedAbrar\Desktop\consmini\Employee_Attendance_Overall_Dataset.xlsx"), null, true),
+				    Employee_Sheet = Source{[Item="Employee",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Employee_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EmployeeID", Int64.Type}, {"EmployeeName", type text}, {"Gender", type text}, {"DateOfJoining", type datetime}, {"ExperienceYears", type number}, {"DesignationID", Int64.Type}, {"DepartmentID", Int64.Type}, {"EmploymentType", type text}, {"EmployeeStatus", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

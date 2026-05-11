@@ -1,0 +1,33 @@
+table Department
+	lineageTag: 66767df8-90e8-49ab-9f91-76adb65b5fc5
+
+	column DepartmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1645d0de-c5ca-414b-8fc5-e8e3e2fd6f1b
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentName
+		dataType: string
+		lineageTag: 27821639-dcfa-4f6b-bc0c-6d52536f2c77
+		summarizeBy: none
+		sourceColumn: DepartmentName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Department = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\MohammedAbrar\Desktop\consmini\Employee_Attendance_Overall_Dataset.xlsx"), null, true),
+				    Department_Sheet = Source{[Item="Department",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Department_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"DepartmentID", Int64.Type}, {"DepartmentName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
